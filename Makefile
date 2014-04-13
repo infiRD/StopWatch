@@ -133,8 +133,8 @@ PARENT_INSTALL_DIR=infi
 
 # install
 install: 
-	cp -f ${CND_ARTIFACT_PATH_Debug} ${LIB_INST_DIR}/${CND_ARTIFACT_NAME_Debug}
-	cp -f ${CND_ARTIFACT_PATH_Release} ${LIB_INST_DIR}/${CND_ARTIFACT_NAME_Release}
+	cp -f ${CND_ARTIFACT_PATH_Debug} ${LIB_INST_DIR}/${CND_ARTIFACT_NAME_Debug} 2>/dev/null || :
+	cp -f ${CND_ARTIFACT_PATH_Release} ${LIB_INST_DIR}/${CND_ARTIFACT_NAME_Release} 2>/dev/null || :
 	
 	mkdir -p ${INCLUDE_INST_DIR}/${PARENT_INSTALL_DIR} 
 	cp -f include/${INCLUDE_FILE} ${INCLUDE_INST_DIR}/${PARENT_INSTALL_DIR}/ 
@@ -148,7 +148,7 @@ remove:
 	rm -f ${LIB_INST_DIR}/${CND_ARTIFACT_NAME_Release}
 	
 	rm -f ${INCLUDE_INST_DIR}/${PARENT_INSTALL_DIR}/${INCLUDE_FILE}
-	rm ${INCLUDE_INST_DIR}/${PARENT_INSTALL_DIR}/VERSION
+	rm -f ${INCLUDE_INST_DIR}/${PARENT_INSTALL_DIR}/VERSION
 	
 	@echo
 	@echo ${PROJECTNAME} removed !
