@@ -8,7 +8,7 @@ Installation
 ```bash
 git clone https://github.com/infiRD/StopWatch.git StopWatch
 cd StopWatch
-make
+make CONF=Release
 sudo make install
 ```
 
