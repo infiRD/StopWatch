@@ -63,6 +63,8 @@ build: .build-post
 clean: .clean-post
 
 .clean-pre:
+	rm dist -r -f
+	rm build -r -f
 # Add your pre 'clean' code here...
 
 .clean-post: .clean-impl
