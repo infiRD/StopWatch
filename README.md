@@ -17,6 +17,8 @@ Cleanup
 ------------
 ```bash
 sudo make remove
+cd ..
+rm StopWatch -R -f
 ```
 
 
