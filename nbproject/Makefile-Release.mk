@@ -42,14 +42,14 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f1
+	${TESTDIR}/TestFiles/f2
 
 # C Compiler Flags
-CFLAGS=
+CFLAGS=`cppunit-config --cflags` 
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=`cppunit-config --cflags` 
+CXXFLAGS=`cppunit-config --cflags` 
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -58,7 +58,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=`cppunit-config --libs` `cppunit-config --libs`  
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -73,22 +73,22 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libstopwatch.a: ${OBJECTFILES}
 ${OBJECTDIR}/src/stopwatch.o: src/stopwatch.cc 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/stopwatch.o src/stopwatch.cc
+	$(COMPILE.cc) -O2 -Iinclude -I. -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/stopwatch.o src/stopwatch.cc
 
 # Subprojects
 .build-subprojects:
 
 # Build Test Targets
 .build-tests-conf: .build-conf ${TESTFILES}
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/src/tests/basictest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/basicTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -lrt `cppunit-config --libs` `cppunit-config --libs`   
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} -lrt 
 
 
-${TESTDIR}/src/tests/basictest.o: src/tests/basictest.cc 
-	${MKDIR} -p ${TESTDIR}/src/tests
+${TESTDIR}/tests/basicTest.o: tests/basicTest.cc 
+	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Iinclude -I. -I. `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/src/tests/basictest.o src/tests/basictest.cc
+	$(COMPILE.cc) -O2 -Iinclude -I. -I. -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/basicTest.o tests/basicTest.cc
 
 
 ${OBJECTDIR}/src/stopwatch_nomain.o: ${OBJECTDIR}/src/stopwatch.o src/stopwatch.cc 
@@ -99,7 +99,7 @@ ${OBJECTDIR}/src/stopwatch_nomain.o: ${OBJECTDIR}/src/stopwatch.o src/stopwatch.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -Iinclude -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/stopwatch_nomain.o src/stopwatch.cc;\
+	    $(COMPILE.cc) -O2 -Iinclude -I. -I. -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/stopwatch_nomain.o src/stopwatch.cc;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/stopwatch.o ${OBJECTDIR}/src/stopwatch_nomain.o;\
 	fi
@@ -108,7 +108,7 @@ ${OBJECTDIR}/src/stopwatch_nomain.o: ${OBJECTDIR}/src/stopwatch.o src/stopwatch.
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
-	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f2 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi
