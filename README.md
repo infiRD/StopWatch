@@ -9,14 +9,14 @@ Installation
 git clone https://github.com/infiRD/StopWatch.git StopWatch
 cd StopWatch
 make
-make install
+sudo make install
 ```
 
 
 Cleanup
 ------------
 ```bash
-make remove
+sudo make remove
 ```
 
 
